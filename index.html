@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Creative Designer</title>
+  <style>
+    :root {
+      --primary-color: #00e676;
+      --accent-color: #ff4081;
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --text-light: #fff;
+      --text-muted: #bbb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(18, 18, 18, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      padding: 0.5rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Social Media Icons */
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icons a {
+      color: var(--text-light);
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--primary-color);
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      text-align: center;
+      z-index: 1;
+      opacity: 1; /* Set opacity to 1 to show content immediately */
+      transform: translateY(0); /* Remove translation effect */
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--bg-dark);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 230, 118, 0.2);
+    }
+
+    /* Sections */
+    .section {
+      padding: 6rem 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-content h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image {
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .about-text {
+      color: var(--text-muted);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--bg-card);
+      border-radius: 8px;
+      background: var(--bg-card);
+      color: var(--text-light);
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+    .footer-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 2rem 0; /* Optional: Add some padding */
+}
+/* Additional Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    display: none; /* Hide nav links initially */
+  }
+
+  .nav-links.active {
+    display: flex; /* Show nav links when active */
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .about-content {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); /* Single column layout */
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center; /* Center text for footer on mobile */
+  }
+}
+.btn-resume {
+  position: fixed;
+  top: 12px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  background: var(--accent-color);
+  color: var(--bg-dark);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  z-index: 1001; /* Make sure it's above other elements */
+}
+
+.btn-resume:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 64, 129, 0.2);
+}
+
+
+
+  </style>
+  <!-- Include Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+  <a href="#" class="logo">Welcome</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="C:\Users\Abc\Desktop\me\SIDDHANT MISHRA CV.pdf" class="btn btn-resume" target="_blank">Download CV</a> <!-- Add this line -->
+      <!-- Social Media Icons -->
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=100024571506397&__cft__[0]=AZXwCVgVfIkNMRjoRw9H3cMz0Rw6cSaIkjBufTJr_UFttN9Nganzcprl78P6QzHrAkSoeRpLgmcFiuMbRKFAPWxmYxFu5l10jZDvlm3WE78c8zY7h9GHFyFOo8upYVmyi_PDbO-i8dYCvkYEWiPIRWgnDDAdlOvHtWOlXN41IhkmgulUFbp8_5q1gZ0bQyBX8rmSVWCGOetWMoT9wxZ3Ftn8&__tn__=%3C%3C%2CP-R" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      
+        <a href="https://www.instagram.com/_phobicc_sid2.o/?hl=en#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/sidharth-mishra-9297ab331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <button class="mobile-menu-btn">Menu</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="C:\Users\Abc\Desktop\me\74.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <font face="ubuntu">
+      <h1>Hi I am Siddhant Kumar Mishra</h1>
+      <p>UI/UX & Graphic Designer</p></font>
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>About Me</h2>
+      </div>
+      <div class="about-content">
+        <div class="about-image">
+          <img src="C:\Users\Abc\Desktop\me\Group 19.png" alt="About Me">
+        </div>
+        <div class="about-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque leo nec turpis suscipit, sit amet consequat justo tincidunt. Curabitur ut metus id lorem convallis tincidunt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Projects Section -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>My Projects</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <a href="C:\Users\Abc\Desktop\me\smartmockups_m2gf266i.jpg"><img src="C:\Users\Abc\Desktop\me\smartmockups_m2gf266i.jpg" class="project-image" alt="Project 1"></a>
+        <div class="project-content">
+          <h3>Project 1</h3>
+          <p>Short description of Project 1.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <a href="C:\Users\Abc\Desktop\me\Frame 5.png"><img src="C:\Users\Abc\Desktop\me\Frame 5.png" class="project-image" alt="Project 2"></a>
+        <div class="project-content">
+          <h3>Project 2</h3>
+          <p>Short description of Project 2.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <a href="C:\Users\Abc\Desktop\me\frame 4.png"><img src="C:\Users\Abc\Desktop\me\frame 4.png" class="project-image" alt="Project 3"></a>
+        <div class="project-content">
+          <h3>Project 3</h3>
+          <p>Short description of Project 3.</p>
+        </div>
+      </div>
+      <!-- New Project Card -->
+      <div class="project-card">
+       <a href="C:\Users\Abc\Desktop\me\fv.png"> <img src="C:\Users\Abc\Desktop\me\fv.png" class="project-image" alt="Project 4"></a>
+        <div class="project-content">
+          <h3>Project 4</h3>
+          <p>Short description of Project 4.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contact Me</h2>
+      </div>
+      <form class="contact-form">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" placeholder="Your Message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer>
+  <div class="container footer-container">
+    <p>&copy; 2024 Siddhant Kumar Mishra. All rights reserved.</p>
+  </div>
+</footer>
+
+
+  <script>
+    const navbar = document.querySelector('.navbar');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    // Mobile menu toggle
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navLinks = document.querySelector('.nav-links');
+
+mobileMenuBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('active'); // Toggle active class to show/hide links
+});
+
+  </script>
+</body>
+</html>
